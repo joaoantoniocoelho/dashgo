@@ -1,8 +1,8 @@
 import {Box, Icon, Link, Stack, Text} from "@chakra-ui/react";
-import {RiDashboardLine, RiContactsLine, RiInputMethodLine} from "react-icons/all";
+import {RiDashboardLine, RiContactsLine, RiInputMethodLine} from "react-icons/ri";
 import React from "react";
 
-export function Sidebar() {
+export default function Sidebar() {
     return (
         <Box as={'aside'} w={'64'} mr={'8'}>
             <Stack spacing={'12'} align={'flex-start'}>
