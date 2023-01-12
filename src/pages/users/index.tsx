@@ -14,7 +14,7 @@ import {
     Tr,
     useBreakpointValue
 } from "@chakra-ui/react";
-import React from "react";
+import React, {useEffect} from "react";
 import Sidebar from "../../components/sidebar";
 import {RiAddLine} from "react-icons/ri";
 import {Header} from "../../components/header";
@@ -26,6 +26,13 @@ export default function UserList() {
         base: false,
         lg: true
     })
+
+    useEffect(() => {
+        fetch('http://localhost:3000/mirage/users')
+            .then(response => response.json())
+            .then(data => console.log(data))
+    }, [])
+
     return (
         <Box>
             <Header/>

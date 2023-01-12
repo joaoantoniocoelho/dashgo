@@ -19,6 +19,7 @@
     "@types/react-dom": "18.0.10",
     "apexcharts": "^3.36.3",
     "framer-motion": "^8.3.3",
+    "miragejs": "^0.1.47",
     "next": "13.1.1",
     "react": "18.2.0",
     "react-apexcharts": "^1.4.0",
