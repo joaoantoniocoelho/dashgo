@@ -3,6 +3,9 @@ import {RiSearchLine} from "react-icons/ri";
 import React from "react";
 
 export function SearchBox() {
+
+    const searchInputRef = React.useRef<HTMLInputElement>(null);
+
     return (
         <Flex
             as={'label'}
@@ -24,6 +27,7 @@ export function SearchBox() {
                 _placeholder={{color: 'gray.400'}}
                 px={'4'}
                 mr={'4'}
+                ref={searchInputRef}
             />
             <Icon as={RiSearchLine} fontSize={'20'}/>
         </Flex>
