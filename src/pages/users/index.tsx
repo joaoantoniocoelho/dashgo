@@ -21,33 +21,15 @@ import {RiAddLine} from "react-icons/ri";
 import {Header} from "../../components/header";
 import {Pagination} from "../../components/pagination";
 import Link from "next/link";
-import {useQuery} from "react-query";
-
-interface User {
-    id: string;
-    name: string;
-    email: string;
-    createdAt: string;
-}
-
-interface UserResponse {
-    users: User[]
-}
+import {useUsers} from "../../services/hooks/useUsers";
 
 export default function UserList() {
-    const {data, isLoading, isFetching, error} = useQuery<UserResponse>('users', async () => {
-        const response = await fetch('http://localhost:3000/mirage/users')
-
-        return await response.json()
-    }, {
-        staleTime: 1000 * 5
-    });
+    const { data, isLoading, isFetching, error } = useUsers();
 
     const isWideVersion = useBreakpointValue({
         base: false,
         lg: true
     })
-
 
     return (
         <Box>
