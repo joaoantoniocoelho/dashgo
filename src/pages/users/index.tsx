@@ -5,6 +5,7 @@ import {
     Flex,
     Heading,
     Icon,
+    Link,
     Spinner,
     Table,
     Tbody,
@@ -20,19 +21,29 @@ import Sidebar from "../../components/sidebar";
 import {RiAddLine} from "react-icons/ri";
 import {Header} from "../../components/header";
 import {Pagination} from "../../components/pagination";
-import Link from "next/link";
-import {useUsers} from "../../services/hooks/useUsers";
+import NextLink from "next/link";
+import {useUsers} from "../../hooks/useUsers";
+import {queryClient} from "../../services/queryClient";
+import {api} from "../../services/api";
 
 export default function UserList() {
     const [page, setPage] = React.useState(1);
     const {data, isLoading, isFetching, error} = useUsers(page);
 
-    console.log(page);
-
     const isWideVersion = useBreakpointValue({
         base: false,
         lg: true
     })
+
+    async function handlePrefetchUser(id: number) {
+        await queryClient.prefetchQuery(['user', id], async () => {
+            const response = await api.get(`users/${id}`);
+
+            return response.data;
+        }), {
+            staleTime: 1000 * 60 * 10 // 10 minutes
+        }
+    }
 
     return (
         <Box>
@@ -49,7 +60,7 @@ export default function UserList() {
                             {!isLoading && isFetching && <Spinner size={'sm'} color={'gray.500'} ml={'4'}/>}
                         </Heading>
 
-                        <Link href={'/users/create'} passHref>
+                        <NextLink href={'/users/create'} passHref>
                             <Button
                                 as='a'
                                 size='sm'
@@ -59,7 +70,7 @@ export default function UserList() {
                                 leftIcon={<Icon as={RiAddLine}/>}>
                                 Criar novo
                             </Button>
-                        </Link>
+                        </NextLink>
                     </Flex>
                     {
                         isLoading ? (
@@ -91,7 +102,10 @@ export default function UserList() {
                                                 </Td>
                                                 <Td>
                                                     <Box>
-                                                        <Text fontWeight={'bold'}>{user.name}</Text>
+                                                        <Link color={'purple.400'}
+                                                              onMouseEnter={() => handlePrefetchUser(user.id)}>
+                                                            <Text fontWeight={'bold'}>{user.name}</Text>
+                                                        </Link>
                                                         <Text fontSize={'sm'} color={'gray.300'}>{user.email}</Text>
                                                     </Box>
                                                 </Td>
