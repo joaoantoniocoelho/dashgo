@@ -21,7 +21,7 @@ export function makeServer() {
                     return `user_${i + 1}@email.com`
                 },
                 createdAt() {
-                    return new Date()
+                    return new Date(Date.now() - Math.floor(Math.random() * 10000000000))
                 },
             })
         },
