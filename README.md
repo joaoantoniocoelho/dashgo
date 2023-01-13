@@ -28,9 +28,12 @@ npm start
 
 
 ## Screenshot
-<div>
-<img src="/screenshots/dashboard-screen.png" alt="app screenshot" width="500">
-<img src="/screenshots/create-user-form-example.png" alt="app screenshot" width="500">
-</div>
+<p align="center">
+  <img src="/screenshots/dashboard-screen.png" alt="app screenshot" width="500">
+</p>
+
+<p align="center">
+  <img src="/screenshots/create-user-form-example.png" alt="app screenshot" width="500">
+</p>
 
 > You can see more screnshots on [screenshots](https://github.com/joaoantoniocoelho/dashgo/tree/master/screenshots) 
