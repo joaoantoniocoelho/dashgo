@@ -3,7 +3,7 @@
 
 DashGo is an administrative dashboard with charts, user list and user creation.
 
-The purpose of this application was learn react-query, react-hook-form and chakra ui
+The purpose of this application was learn [Chakra UI](https://chakra-ui.com/), [React-Query](https://react-query-v3.tanstack.com/), [React-Hook-Form](https://react-hook-form.com/) and [Mirage.js](https://miragejs.com/https://react-query-v3.tanstack.com/)
 
 The login is not functional, you can pass any user/password combination and will be redirected to the dashboard
 
@@ -33,7 +33,6 @@ npm start
 </p>
 
 <p align="center">
-  <img src="/screenshots/create-user-form-example.png" alt="app screenshot" width="500">
 </p>
 
 > You can see more screnshots on [screenshots](https://github.com/joaoantoniocoelho/dashgo/tree/master/screenshots) 
