@@ -24,7 +24,10 @@ import Link from "next/link";
 import {useUsers} from "../../services/hooks/useUsers";
 
 export default function UserList() {
-    const { data, isLoading, isFetching, error } = useUsers();
+    const [page, setPage] = React.useState(1);
+    const {data, isLoading, isFetching, error} = useUsers(page);
+
+    console.log(page);
 
     const isWideVersion = useBreakpointValue({
         base: false,
@@ -105,7 +108,7 @@ export default function UserList() {
                                     </Tbody>
                                 </Table>
 
-                                <Pagination/>
+                                <Pagination totalCount={200} currentPage={page} onPageChange={setPage}/>
                             </>
                         )
                     }

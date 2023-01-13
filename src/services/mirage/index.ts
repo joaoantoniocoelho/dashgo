@@ -32,25 +32,28 @@ export function makeServer() {
 
         routes() {
             this.namespace = 'mirage';
-            this.timing = 750;
-
+            this.timing = 750; // delay para as chamadas retornarem
             this.get('/users', function (schema, request) {
-                const {page = 1, per_page = 10} = request.queryParams;
+                const { page = 1, per_page = 10 } = request.queryParams;
 
                 const total = schema.all('user').length;
 
-                const pageStart = (Number(page) - 1) * Number(per_page);
-                const pageEnd = pageStart + Number(per_page);
+                const start = (Number(page) - 1) * Number(per_page);
+                const end = start + Number(per_page);
 
-                const users = this.serialize(schema.all('user'))
-                    .users.slice(pageStart, pageEnd);
+                const users = this.serialize(schema.all('user')).users.slice(start, end);
 
-                return new Response(200, {'x-total-count': String(total)}, {users})
+                return new Response(200,
+                    { 'x-total-count': String(total) },
+                    { users }
+                )
             });
-            this.post('/users')
+            this.get('/users/:id');
+            this.post('/users');
 
+            // Reset para não conflitar com o api routes do next
             this.namespace = '';
-            this.passthrough();
+            this.passthrough(); // Como se fosse o next() de um middleware em node, executa o que vem depois
         }
     });
 }
