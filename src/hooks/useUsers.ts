@@ -16,7 +16,7 @@ const getUsers = async (page: number): Promise<UserResponse> => {
                 id: user.id,
                 name: user.name,
                 email: user.email,
-                createdAt: user.createdAt
+                createdAt: new Date(new Date(Date.now() - Math.floor(Math.random() * 10000000000))).toISOString()
             }
         }),
         totalCount

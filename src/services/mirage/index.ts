@@ -1,8 +1,12 @@
-import {createServer, Factory, Model, Response} from 'miragejs'
+import {ActiveModelSerializer, createServer, Factory, Model, Response} from 'miragejs'
 import {User} from "../../types/types";
 
 export function makeServer() {
     return createServer({
+        serializers: {
+            application: ActiveModelSerializer
+        },
+
         models: {
             user: Model.extend<Partial<User>>({}),
         },
@@ -14,10 +18,7 @@ export function makeServer() {
                 },
                 email(i) {
                     return `user_${i + 1}@email.com`
-                },
-                createdAt() {
-                    return new Date(Date.now() - Math.floor(Math.random() * 10000000000))
-                },
+                }
             })
         },
 
@@ -27,7 +28,8 @@ export function makeServer() {
 
         routes() {
             this.namespace = 'mirage';
-            this.timing = 750; // delay para as chamadas retornarem
+            this.timing = 750;
+
             this.get('/users', function (schema, request) {
                 const { page = 1, per_page = 10 } = request.queryParams;
 
@@ -36,7 +38,10 @@ export function makeServer() {
                 const start = (Number(page) - 1) * Number(per_page);
                 const end = start + Number(per_page);
 
-                const users = this.serialize(schema.all('user')).users.slice(start, end);
+                const users = this.serialize(schema.all('user'))
+                    .users
+                    .sort((a, b) => a.name.localeCompare(b.name))
+                    .slice(start, end);
 
                 return new Response(200,
                     { 'x-total-count': String(total) },
@@ -46,9 +51,8 @@ export function makeServer() {
             this.get('/users/:id');
             this.post('/users');
 
-            // Reset para não conflitar com o api routes do next
             this.namespace = '';
-            this.passthrough(); // Como se fosse o next() de um middleware em node, executa o que vem depois
+            this.passthrough();
         }
     });
 }
