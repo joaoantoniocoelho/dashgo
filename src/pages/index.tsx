@@ -4,6 +4,8 @@ import {Input} from "../components/form/Input";
 import {useForm} from "react-hook-form";
 import * as yup from 'yup';
 import {yupResolver} from "@hookform/resolvers/yup";
+import {useRouter} from "next/router";
+import {Logo} from "../components/header/Logo";
 
 const signInFormSchema = yup.object().shape({
     email: yup.string().required('E-mail obrigatório').email('E-mail inválido'),
@@ -14,11 +16,14 @@ export default function Home() {
     const {register, handleSubmit, formState} = useForm({
         resolver: yupResolver(signInFormSchema)
     });
+    const router = useRouter();
 
     const {errors} = formState;
     async function handleSignIn(values: any) {
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        console.log(values)
+        // await promisse, resolve after 2 seconds and navigate to dashboard
+        await new Promise(resolve => setTimeout(resolve, 1000)).then(() => {
+            router.push('/dashboard');
+        })
     }
 
     return (
@@ -29,6 +34,7 @@ export default function Home() {
                 align={'center'}
                 justify={'center'}
             >
+                <Logo />
                 <Flex
                     as={'form'}
                     w={'100%'}
